@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+  <section class="card lg:col-span-2">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <h2 class="text-lg font-semibold">Live metrics</h2>
+        <p class="text-sm text-slate-200/80 mt-1">Polling <span class="font-mono">/api/metrics</span> every 2 seconds.</p>
+      </div>
+      <div class="flex gap-2">
+        <button class="btn" onclick="refreshMetrics()">Refresh</button>
+        <button class="btn btn-danger" onclick="resetMetrics()">Reset</button>
+      </div>
+    </div>
+
+    <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div class="mini">
+        <p class="mini-k">Allowed</p>
+        <p class="mini-v" id="allowed">0</p>
+      </div>
+      <div class="mini">
+        <p class="mini-k">Blocked</p>
+        <p class="mini-v" id="blocked">0</p>
+      </div>
+      <div class="mini">
+        <p class="mini-k">Algorithm</p>
+        <p class="mini-v" id="algo">{{ algo }}</p>
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <canvas id="trafficChart" height="110"></canvas>
+    </div>
+  </section>
+
+  <aside class="card">
+    <h3 class="text-base font-semibold">Top blocked clients</h3>
+    <p class="text-sm text-slate-200/80 mt-1">Who is hitting the limiter the most.</p>
+
+    <div class="mt-3 space-y-2" id="topBlocked">
+      <p class="text-sm text-slate-200/60">No data yet.</p>
+    </div>
+
+    <div class="mt-5 p-3 rounded-xl bg-slate-900/50 ring-1 ring-slate-700/50">
+      <p class="text-sm font-medium">Try this</p>
+      <p class="text-xs text-slate-200/80 mt-1">Run the load script to generate traffic:</p>
+      <p class="text-xs font-mono mt-2">python scripts/load_test.py --url http://127.0.0.1:8000/api/ping --clients 5 --requests 250</p>
+    </div>
+  </aside>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  initChart();
+  startMetricsPolling();
+</script>
+{% endblock %}

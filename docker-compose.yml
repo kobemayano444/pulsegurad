@@ -1,0 +1,18 @@
+services:
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+  app:
+    build: .
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - RATE_LIMIT_ALGO=fixed_window
+      - DEFAULT_LIMIT=60
+      - WINDOW_SECONDS=60
+      - TB_CAPACITY=30
+      - TB_REFILL_PER_SEC=1.0
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis

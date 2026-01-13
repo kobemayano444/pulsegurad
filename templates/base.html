@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ app_name }} | API Rate Limiter</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-slate-100">
+  <div class="max-w-6xl mx-auto px-4 py-6">
+    <header class="flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-2xl bg-indigo-500/20 ring-1 ring-indigo-400/30 flex items-center justify-center">
+          <span class="text-indigo-200 font-bold">PG</span>
+        </div>
+        <div>
+          <h1 class="text-xl font-semibold tracking-tight">{{ app_name }}</h1>
+          <p class="text-xs text-slate-300">API rate limiting • abuse prevention • metrics</p>
+        </div>
+      </div>
+      <nav class="flex items-center gap-2">
+        <a href="/" class="btn">Home</a>
+        <a href="/dashboard" class="btn">Dashboard</a>
+        <a href="/docs" class="btn" target="_blank" rel="noreferrer">API Docs</a>
+      </nav>
+    </header>
+
+    <main class="mt-6">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="mt-10 text-xs text-slate-400 flex items-center justify-between">
+      <span>Built to look and feel like a real internal tool.</span>
+      <span class="opacity-80">PulseGuard • FastAPI + Redis</span>
+    </footer>
+  </div>
+  <script src="/static/app.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

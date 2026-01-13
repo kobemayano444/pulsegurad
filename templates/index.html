@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+  <section class="card lg:col-span-2">
+    <h2 class="text-lg font-semibold">What this is</h2>
+    <p class="mt-2 text-slate-200/90 leading-relaxed">
+      <span class="font-medium">PulseGuard</span> is a production-style rate limiting service.
+      It sits in front of your API and blocks abusive traffic while collecting clean metrics.
+    </p>
+
+    <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div class="mini">
+        <p class="mini-k">Algorithm</p>
+        <p class="mini-v">{{ algo }}</p>
+      </div>
+      <div class="mini">
+        <p class="mini-k">Default limit</p>
+        <p class="mini-v">{{ default_limit }}/min</p>
+      </div>
+      <div class="mini">
+        <p class="mini-k">Health</p>
+        <p class="mini-v" id="health">Checking…</p>
+      </div>
+    </div>
+
+    <div class="mt-6 flex flex-wrap gap-2">
+      <button class="btn btn-primary" onclick="hitPing(1)">Ping once</button>
+      <button class="btn" onclick="hitPing(10)">Ping ×10</button>
+      <button class="btn" onclick="hitPing(80)">Stress (likely 429)</button>
+      <button class="btn btn-danger" onclick="resetMetrics()">Reset metrics</button>
+    </div>
+
+    <div class="mt-4">
+      <pre class="code" id="log">Ready.
+Tip: open the Dashboard tab to watch metrics update in real time.</pre>
+    </div>
+  </section>
+
+  <aside class="card">
+    <h3 class="text-base font-semibold">How to use</h3>
+    <ol class="mt-2 space-y-2 text-sm text-slate-200/90 list-decimal list-inside">
+      <li>Click <span class="font-medium">Ping</span> or run curl against <span class="font-mono">/api/ping</span>.</li>
+      <li>Watch your remaining limit via response headers.</li>
+      <li>Open <span class="font-medium">Dashboard</span> to see allowed vs blocked requests.</li>
+    </ol>
+
+    <div class="mt-4 p-3 rounded-xl bg-indigo-500/10 ring-1 ring-indigo-400/20">
+      <p class="text-sm font-medium text-indigo-100">Pro tip</p>
+      <p class="text-xs text-slate-200/90 mt-1">
+        Send an API key header to simulate different clients:
+      </p>
+      <p class="text-xs font-mono mt-2 text-indigo-100/90">x-api-key: DEMO123</p>
+    </div>
+
+    <div class="mt-4">
+      <a class="btn w-full" href="/dashboard">Open dashboard</a>
+    </div>
+  </aside>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  checkHealth();
+</script>
+{% endblock %}
