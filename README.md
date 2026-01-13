@@ -90,10 +90,6 @@ Common ones:
 
 ---
 
-## Resume bullets (example)
-- Implemented fixed-window and token-bucket rate limiting in FastAPI using Redis atomic ops and Lua scripting, reducing simulated API abuse by 65%.
-- Built a live metrics dashboard (allowed vs blocked requests, top offenders) and admin endpoints for monitoring and demo reset.
-
 ---
 
 ## Notes
